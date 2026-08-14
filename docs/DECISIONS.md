@@ -308,3 +308,68 @@ of the action description.
 
 The skill still governs *how* each block is written. Only the section list
 is fixed here.
+
+---
+
+## D-012 — The rendering route is the user's choice, and the domain stays above it
+
+**Status:** decided
+**Resolves:** `ARCHITECTURE_AUDIT.md` §5.6
+**Depends on:** D-004
+
+The same shot or asset can be produced along different routes: a written
+prompt (LIRA for images, CINEDANCE for video) or a UI-driven tool such as
+Higgsfield Cinema Studio, which offers direct control of camera, depth of
+field and similar parameters.
+
+**PRE does not choose the route on its own.** Which route renders a given
+artifact is a creative and cost decision, so it is a decision gate.
+
+### How the choice is presented
+
+Asking per artifact would violate the automation principle — a feature film
+has thousands of them. So:
+
+1. The user sets a **default route per artifact kind** once per project
+   (character sheets, location plates, keyframes, production shots). This
+   is itself a gate the first time; afterwards it is remembered.
+2. Any single artifact can be **switched to another route** at its own
+   gate, without changing the default.
+3. PRE **never guesses the first time** and never silently switches a
+   route that was chosen.
+
+### What PRE prepares, per route
+
+- **Prompt route** — PRE writes the prompt through the relevant skill and
+  hands over the text plus the reference assets.
+- **Parameter route** — no prompt exists. PRE names the tool, assembles the
+  required references, and states which controls to set. The result comes
+  back as an import.
+
+Both end at the same HARD GATE: a paid generation, and a returned file.
+
+### The domain stores intent, not route
+
+Camera, framing, depth and optics are **story and staging decisions**, and
+they survive a change of route. They belong in the domain model — on the
+shot — described in provider-independent terms.
+
+The route decides only how that intent is expressed: as OPTICS and CAMERA
+text in a CINEDANCE prompt, as a depth map image, or as controls set in
+Cinema Studio's interface. Three renderings, one stored intent.
+
+This is `CLAUDE.md` principle 10 applied to generation: switching a shot
+from a prompt to Cinema Studio must not lose what the shot was meant to
+look like, and must not require re-deciding it.
+
+### Recorded as an assumption, not a fact
+
+What Cinema Studio's Frames and Scenes do exactly is **not yet confirmed**
+— the reading above (frames and video with direct camera and depth-of-field
+control) is the user's impression, not documentation. Marked `INFERENCE`
+in the project's own terms.
+
+It does not need confirming to proceed: the decision above holds whichever
+way the details land, because it puts the choice with the user and keeps
+the domain above the route. What confirmation would change is only the
+per-artifact-kind defaults offered in step 1.

@@ -388,11 +388,12 @@ Both end at a HARD GATE in `DECISION_GATES.md` (a paid generation, a
 returned file), so the gate model already covers the stop. What is missing
 is the payload type on the artifact itself.
 
-**Open — needs the user's answer, does not block Module 01:** what Frames
-and Scenes actually produce, and where they sit relative to the documented
-pipeline. Specifically: does Frames replace the LIRA path for keyframes and
-location plates; does Scenes overlap with or replace CINEDANCE video
-prompts; and is either driven by a prompt after all, or purely by UI
-parameters. The answer decides whether LIRA and CINEDANCE stay the primary
-generators with Cinema Studio as a fast path, or whether the routing
-inverts for some artifact types.
+**RESOLVED by D-012**, which puts the choice of rendering route with the
+user rather than requiring PRE to know which tool wins, and keeps camera,
+framing and depth intent in the domain model above the route.
+
+Still unconfirmed, and marked as such: what Frames and Scenes do exactly.
+The working reading — frames and video with direct camera and depth-of-field
+control — is the user's impression, not documentation. D-012 holds either
+way; confirmation would only refine the per-artifact-kind defaults it
+offers.
