@@ -2,7 +2,7 @@
 
 Status: working document, produced from a read-through of `CLAUDE.md`,
 `docs/PRE_PROJECT_CONTEXT.md`, `docs/modules/01_global_script_analyzer.md`,
-the three Higgsfield production briefs (`docs/references/`) and the six
+the four Higgsfield production briefs (`docs/references/`) and the six
 production skills (`docs/skills/`).
 
 This is not a spec. It is a list of contradictions, missing decisions and
@@ -347,3 +347,52 @@ the two should not be conflated when the scene-production phase is speced.
   user ever sees (§3.2).
 - Assets are organised in folders per sequence — the "work runs in scene
   blocks" practice from HELL GRIND and CULLY HILL BOYS.
+
+### 5.6 Cinema Studio — a tool PRE writes no prompt for
+
+ADILIADA also used **Higgsfield Cinema Studio**, including its Frames and
+Scenes features. The brief text does not mention Cinema Studio; this comes
+from the user's own account of the production.
+
+What the existing material does document is `Cinema Studio AI Cast`, in
+`docs/skills/lira/SKILL.md`, and how it is described matters more than
+what it makes:
+
+> "AI Cast builds a character reference sheet AUTOMATICALLY — a standalone
+> tool on Higgsfield, all parameters set in its UI, **no prompt from Lira
+> needed**."
+
+LIRA routes to it as the *fast path* for character sheets, keeping its own
+three-panel prompt template for when full control is wanted. So the
+toolchain already contains a category PRE has not accounted for: **steps
+where the correct output is not a prompt at all, but a set of parameters
+plus a handoff.**
+
+This has a direct architectural consequence. `PRE_PROJECT_CONTEXT.md` §19
+defines two generation modes — integrated (API) and assisted manual (PRE
+prepares model, references, prompt, parameters; the user runs it
+externally). Assisted manual currently assumes a **prompt** is the payload.
+For a UI-driven tool it is not: there is nothing to paste. The payload is a
+filled parameter set, the required reference assets, and instructions for
+which controls to set — and the result comes back as an import.
+
+So the asset and shot layers need two output kinds, not one:
+
+1. **Prompt output** — LIRA for images, CINEDANCE for video. PRE writes
+   text the user pastes into a generator.
+2. **Parameter handoff** — Cinema Studio (AI Cast, Frames, Scenes) and any
+   comparable UI tool. PRE selects the tool, assembles the inputs, states
+   the settings, and waits for the produced file. No prompt exists.
+
+Both end at a HARD GATE in `DECISION_GATES.md` (a paid generation, a
+returned file), so the gate model already covers the stop. What is missing
+is the payload type on the artifact itself.
+
+**Open — needs the user's answer, does not block Module 01:** what Frames
+and Scenes actually produce, and where they sit relative to the documented
+pipeline. Specifically: does Frames replace the LIRA path for keyframes and
+location plates; does Scenes overlap with or replace CINEDANCE video
+prompts; and is either driven by a prompt after all, or purely by UI
+parameters. The answer decides whether LIRA and CINEDANCE stay the primary
+generators with Cinema Studio as a fast path, or whether the routing
+inverts for some artifact types.
