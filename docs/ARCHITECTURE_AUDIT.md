@@ -79,7 +79,36 @@ change — the existing rule: this vocabulary must live only inside generated
 
 ## 3. New findings from the skill files themselves
 
-### 3.1 ACTING vs. TIG Acting Task — two systems, unclear division of labor
+### 3.0 Two generations of tooling — not two layers of one system
+Confirmed from the attachment lists in the briefs themselves:
+
+- **Hell Grind + Cully Hill Boys** (generation 1) shipped with exactly three
+  skills, all plain `.md`: `ACTING_SKILL.md`, `LIRA_SKILL.md`,
+  `CINEDANCE_HIGGSFIELD_SKILL.md` (the 15-block version, with CHARACTER
+  ACTING / STYLE / QUALITY as explicit sections).
+- **Oneiric** (generation 2) shipped four skills, all packaged `.skill`
+  bundles: `tig-scene-engine.skill`, `CINEDANCE HIGGSFIELD SKILL.skill`
+  (v4, 11-block, no CHARACTER ACTING/STYLE/QUALITY), `tig-diagram.skill`,
+  `tig-acting-task.skill`. Its own tools list ("a scene-drama engine, an
+  acting system, and CINEDANCE" + "The Diagram Skill") maps `tig-scene-engine`
+  → "scene-drama engine" and `tig-acting-task` → "acting system." **Neither
+  `ACTING_SKILL.md` nor `LIRA_SKILL.md` is attached to or referenced by the
+  Oneiric brief at all.**
+
+So this is **version history, not a two-layer architecture**: on Oneiric,
+`tig-acting-task` stands in for what `ACTING_SKILL.md` did on the two
+earlier films, and CINEDANCE v4 (`.skill`) is the successor to the
+15-block `.md` CINEDANCE. `tig-scene-engine` and `tig-diagram` are net-new
+capabilities that didn't exist yet on Hell Grind/Cully. This replaces the
+earlier "two complementary layers" hypothesis below (§3.1, kept for
+record) — the open question is no longer *how do ACTING and TIG Acting
+Task combine*, but **which generation of the toolset should PRE adopt as
+canonical**: the earlier, production-proven set from two completed
+features, or the more refined/disciplined latest set from the most recent
+film — and what happens to LIRA (image prompts), which has no `TIG`
+successor and presumably still applies to both generations.
+
+### 3.1 (superseded by 3.0) ACTING vs. TIG Acting Task
 `docs/skills/acting/SKILL.md` defines its own five pillars (Objective /
 Obstacle & stakes / Tactics / Beats / Subtext) and a "master profile" format
 (one 150–220 word paragraph, written once, then rewritten per scene — see
@@ -92,14 +121,14 @@ substitute textbook craft definitions."* Its own description calls it
 *"Companion to tig-scene-engine (structure level); this skill is the
 performance level."*
 
-The Oneiric brief's worked example (§06) uses the TIG Acting Task block
-format, not the ACTING skill's prose-paragraph scene-adaptation format —
-implying TIG Acting Task **replaces** ACTING §8 (scene adaptation) in
-practice, while ACTING's master profile (identity, voice, physical habits)
-stays the layer underneath it. **This division is never stated explicitly
-anywhere in the source material — it is inferred.** Decision needed: confirm
-(or reject) this two-layer model — ACTING = permanent identity, TIG Acting
-Task = per-scene tactic — before building an Acting Agent.
+Originally read as two complementary layers (ACTING = permanent identity,
+TIG Acting Task = per-scene tactic). **Per §3.0 above, that reading is
+likely wrong** — they are two successive versions of the same role, from
+two different productions, not two parts of one pipeline. Still open: does
+TIG Acting Task's own master-profile equivalent (it has none — it assumes
+identity/voice locking happened elsewhere) mean Oneiric still relied on
+something like ACTING's master-profile format informally, just without a
+dedicated skill for it? Needs a decision either way (see §3.0).
 
 ### 3.2 "Director's Read" has no explicit skill mapping
 CLAUDE.md / `PRE_PROJECT_CONTEXT.md` name "Script Stress Test" and
@@ -111,37 +140,48 @@ matches the Oneiric brief's own description of "the director's read" in
 §01 almost verbatim). But no source document states this mapping directly.
 Needs confirmation before writing a spec for these two workflow phases.
 
-### 3.3 No single canonical CINEDANCE prompt skeleton
-Three different block lists exist:
-- `docs/skills/cinedance/SKILL.md` (the actual skill, v4): 11 sections —
-  SCENE CONTEXT · ACTIVE REFERENCES · LOCATION MAP · FIRST FRAME AND
-  SPATIAL BLOCKING · FORMAT MODE · OPTICS · CAMERA · ACTION TIMING ·
-  PHYSICS · LIGHTING · AUDIO · POSITIVE CONSTRAINTS. **No CHARACTER ACTING,
-  no STYLE, no QUALITY.**
-- Hell Grind / Cully Hill Boys production examples: 15 sections, including
-  CHARACTER ACTING, STYLE (a fixed per-project Style Prefix), and QUALITY.
-- Oneiric: yet another variant (adds GAZE/EYELINES, SEGMENTS, DIALOGUE as
-  named sections).
+### 3.3 No single canonical CINEDANCE prompt skeleton — again a generation gap
+Per §3.0, this is the same version split, not three independent variants:
+- Hell Grind / Cully Hill Boys used the **generation-1** `.md` CINEDANCE:
+  15 sections, including CHARACTER ACTING, STYLE (a fixed per-project Style
+  Prefix), and QUALITY.
+- Oneiric used **generation-2** CINEDANCE v4 (`docs/skills/cinedance/SKILL.md`,
+  the `.skill` bundle): 11 sections — SCENE CONTEXT · ACTIVE REFERENCES ·
+  LOCATION MAP · FIRST FRAME AND SPATIAL BLOCKING · FORMAT MODE · OPTICS ·
+  CAMERA · ACTION TIMING · PHYSICS · LIGHTING · AUDIO · POSITIVE
+  CONSTRAINTS. No CHARACTER ACTING, no STYLE, no QUALITY as named sections.
+  Its worked example (Oneiric §04, Scene 2) instead folds performance
+  direction into SEGMENTS/DIALOGUE/CHARACTER ACTING-less prose, and drops a
+  dedicated STYLE block in favor of inline style language.
 
-A Prompt Agent implementation needs one canonical section list. Likely
-answer: the v4 skill's 11 sections as the base + CHARACTER ACTING (fed by
-the Acting Agent) + STYLE (per-project constant) as PRE-level additions on
-top of what the skill emits — but this needs to be a deliberate decision,
-not an accident of which example got copied first.
+Same open question as §3.0: adopt v4 as canonical (it is the newer,
+more disciplined, most-recently-battle-tested version), and treat the
+generation-1 STYLE-Prefix-as-fixed-block practice as a PRE-level
+convention layered on top rather than part of the skill itself? This is
+one decision, not two — resolving §3.0 (which generation is canonical)
+resolves this too.
 
 ### 3.4 No single canonical asset-tag naming convention
-Three conventions appear in practice:
+Three conventions appear in practice — and unlike §3.0/§3.3, this one does
+**not** cleanly split by generation, since Cully Hill Boys (generation 1)
+already used the more disciplined scheme on its own:
 - Hell Grind: `@roco`, `@loc_cave_front` — no project code, no version.
-- Cully Hill Boys / Oneiric: `@char_CB_Kel_v9`,
+- Cully Hill Boys **and** Oneiric: `@char_CB_Kel_v9`,
   `@loc_ON_dorm_commonroom_front_s2` — `type_PROJECT_name_scene_version`.
-- TIG Diagram (`tig-blocking-map`): `@staging_[PROJECT]_[scene]_[version]`,
-  with `[PROJECT]` in ALL CAPS.
+- TIG Diagram (`tig-blocking-map`, generation-2 only): its own
+  `@staging_[PROJECT]_[scene]_[version]`, with `[PROJECT]` in ALL CAPS.
+
+Reading: the versioned `type_PROJECT_name_scene_version` scheme is a
+production-learned improvement that appeared starting with Cully Hill Boys
+and simply carried forward into Oneiric — it looks like the convention to
+standardize on regardless of which skill generation PRE adopts. TIG
+Diagram's separate `@staging_` prefix is additive (a new tag type for a
+new artifact kind), not a competing scheme.
 
 Per the Module 01 automation principle ("automate IDs, tags, versions"),
-PRE should generate one deterministic tag scheme system-side (closest to
-the Cully Hill Boys/Oneiric pattern) rather than let it be invented per
-project. This is a concrete decision to make now, not later — it affects
-the `Asset`/`AssetVersion` schema.
+PRE should generate this scheme system-side rather than let it be invented
+per project. Still a concrete decision to lock down — it affects the
+`Asset`/`AssetVersion` schema.
 
 ### 3.5 TIG Scene Engine can rewrite screenplay text (WRITE mode)
 `docs/skills/tig-scene-engine/SKILL.md` has a WRITE/CO-WRITE mode that
@@ -178,8 +218,17 @@ machine).
 
 Blocking for Module 01 schema specifically: **1.1, 1.2, 1.3, 1.4, 1.5**.
 
+**Single highest-leverage open question: §3.0 — which skill generation does
+PRE adopt as canonical** (generation 1: ACTING + LIRA + 15-block CINEDANCE,
+proven on two complete features; or generation 2: TIG Scene Engine + TIG
+Acting Task + TIG Diagram + CINEDANCE v4, the most recent and more
+disciplined set; or both, with an explicit rule for when each applies).
+Resolving it also resolves §3.1 and §3.3, which are downstream restatements
+of the same fork. LIRA has no generation-2 successor and likely applies
+either way.
+
 Blocking for the Orchestrator / skill-invocation layer (not Module 01, but
-next after it): **2.1, 3.1, 3.2, 3.3, 3.4, 3.7**.
+next after it): **2.1, 3.0, 3.2, 3.4, 3.7**.
 
 New data-model concepts surfaced, not yet speced anywhere: **3.5 (script
 revision/proposal), 3.6 (story goal / logline field)**.
