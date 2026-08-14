@@ -16,7 +16,7 @@ obsługiwane przez rozmowę po polsku.
 | `docs/DECISION_GATES.md` | gdzie system działa sam, a gdzie staje i pyta |
 | `docs/ARCHITECTURE_AUDIT.md` | audyt specyfikacji, sprzeczności i otwarte kwestie |
 | `docs/modules/01_global_script_analyzer.md` | specyfikacja Modułu 01 |
-| `docs/references/` | trzy briefy produkcyjne Higgsfield |
+| `docs/references/` | cztery briefy produkcyjne Higgsfield |
 | `docs/skills/` | sześć skilli produkcyjnych |
 
 ## Stan: Moduł 01 — Global Script Analyzer

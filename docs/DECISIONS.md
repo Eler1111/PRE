@@ -25,8 +25,9 @@ toolchain, refined across three productions. Where generation 1 and
 generation 2 disagree, generation 2 wins.
 
 **Consequences:**
-- The canonical video-prompt skeleton is CINEDANCE v4's 11 sections, not
-  the generation-1 15-section layout.
+- The canonical video-prompt skeleton is generation-2's, not the
+  generation-1 15-section layout. Refined by D-011, which fixes the exact
+  section list from the two generation-2 productions.
 - `docs/skills/acting/SKILL.md` and the 15-block CINEDANCE format are
   retained in the repo as historical reference, not as the active spec —
   with the one exception in D-002.
@@ -267,3 +268,43 @@ same boundaries that make providers replaceable (`CLAUDE.md` principle 10)
 apply here: storage access, database access and any assumption of a single
 local user stay behind interfaces. Building both targets now would double
 the work with no benefit while there is one user on one machine.
+
+---
+
+## D-011 — The canonical video-prompt skeleton is the twelve-block production layout
+
+**Status:** decided
+**Refines:** D-001
+**Resolves:** `ARCHITECTURE_AUDIT.md` §5.1
+
+PRE's Prompt Agent targets the block order used by both generation-2
+productions, ONEIRIC and ADILIADA:
+
+```text
+SCENE CONTEXT
+ACTIVE REFERENCES
+LOCATION MAP
+GAZE / EYELINES
+FIRST FRAME AND BLOCKING
+SEGMENTS (timed beats)
+DIALOGUE
+AUDIO
+PHYSICS
+LIGHTING
+STYLE / FORMAT
+POSITIVE LOCKS
+```
+
+This is not a reversal of D-001. `docs/skills/cinedance/SKILL.md` states
+its own list as a default and explicitly permits omissions and additions;
+the twelve blocks above are what that allowance converged on across two
+independent films. Two productions agreeing is better evidence for a
+default than the skill's own suggestion.
+
+What the production layout adds over the skill's default: GAZE / EYELINES
+as its own block, SEGMENTS instead of a single ACTION TIMING block, and
+DIALOGUE separated from AUDIO — the separation that keeps spoken lines out
+of the action description.
+
+The skill still governs *how* each block is written. Only the section list
+is fixed here.

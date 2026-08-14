@@ -251,3 +251,99 @@ revision/proposal object), **§3.6** (story goal / logline field on
 None of the remaining items blocks Module 01: §2.1 and §3.7 belong to the
 Orchestrator layer, §3.4 to asset production, §3.5/§3.6 to scene
 production. §3.2 is a confirmation, not a schema question.
+
+---
+
+## 5. Findings from the fourth brief (ADILIADA)
+
+`docs/references/adiliada_brief.md` is the most recent production and the
+second one using the generation-2 toolchain. It confirms most of what was
+already settled and adds four things that were in none of the first three.
+
+### 5.1 The real generation-2 prompt skeleton — RESOLVED by D-011
+
+ADILIADA lists the CINEDANCE block order explicitly, and it is **identical
+to ONEIRIC's** — twelve blocks: SCENE CONTEXT · ACTIVE REFERENCES ·
+LOCATION MAP · GAZE / EYELINES · FIRST FRAME AND BLOCKING · SEGMENTS
+(timed beats) · DIALOGUE · AUDIO · PHYSICS · LIGHTING · STYLE / FORMAT ·
+POSITIVE LOCKS.
+
+This differs from the list inside `docs/skills/cinedance/SKILL.md`, which
+has no GAZE/EYELINES, no SEGMENTS and no DIALOGUE block, and instead
+carries FORMAT MODE, OPTICS, CAMERA, ACTION TIMING and POSITIVE
+CONSTRAINTS. The skill file explicitly allows this ("not every section is
+mandatory"), so the briefs are not contradicting it — they show what the
+allowance converged on in practice.
+
+Two independent productions agreeing is stronger evidence for PRE's Prompt
+Agent than the skill's own default. See D-011.
+
+### 5.2 Depth map — a second geometry reference, new to the model
+
+ADILIADA introduces a tool absent from all three earlier briefs: a
+black-and-white **depth map** (light = near, dark = far) fed to the video
+model as "the depth skeleton of the scene", giving correct composition,
+volume and proportion. Without it "the space drifts".
+
+This sits alongside the staging diagram (`tig-blocking-map`) as a second
+non-photographic reference that controls geometry rather than look. The
+domain model has `Diagram` but nothing for this. Whether a depth map is a
+kind of `Diagram` or its own artifact type is an open modelling question —
+they differ in how they are produced and in what they control (positions
+versus depth), which argues for a shared "geometry reference" concept with
+a type, rather than two unrelated tables.
+
+### 5.3 Alternate-universe character variants — a new kind of variant
+
+ADILIADA's core problem is a character existing as several versions across
+universes: *"any alternate version of me still has to read as me"*, and the
+rule that answers it — **"Hold the face, change everything else. A new
+universe is a new look, not a new person. The base is never touched."**
+The alternate version reuses the base face as the same pixels, changing
+wardrobe, makeup, hair, scars and damage around it.
+
+This does not fit cleanly into `Entity → State → Asset` as currently read.
+A universe variant is not a continuity state: it is not caused by a state
+event, it does not propagate along a timeline, and two variants are never
+"before and after" each other — they are parallel. Yet it is plainly the
+same entity, since the whole point is that the face is identical.
+
+Open question for the scene-production phase: does a universe variant
+become a `State` with a distinct kind, a second axis on `Entity`, or a
+separate variant table? Module 01 is unaffected — nothing here changes how
+a screenplay is read — but the answer shapes asset production, and the
+existing `state_event` model has no vocabulary for a variant that no event
+brings about.
+
+### 5.4 Storyboard as an explicit development step
+
+Between scene-drama work and generation, ADILIADA describes a
+**step-by-step storyboard** — scenes broken into shots — and says outright
+that this is where a scene's real quality becomes visible, "as opposed to
+how good it was in our heads". CULLY HILL BOYS' "preliminary shotlist"
+with its four-group shot cards is the same stage under another name.
+
+PRE's workflow has Coverage → Shot Cards, which covers it. Worth noting
+only because ADILIADA places it in **development**, before pre-production
+assets, whereas PRE places it after asset preparation. Not a contradiction
+— the storyboard is a plan, the shot card is a production document — but
+the two should not be conflated when the scene-production phase is speced.
+
+### 5.5 What the fourth brief confirms
+
+- The two-pass character build (Soul Cinema close-up face, then Soul 2.0
+  looks, assembled without ever re-running the base portrait) is now
+  documented identically in ONEIRIC and ADILIADA.
+- Visual anchors in locations, and the location "reference frame" the
+  whole project leans on stylistically, restate HELL GRIND and CULLY HILL
+  BOYS.
+- The five post-production stages are identical to ONEIRIC's, word for
+  word in substance.
+- Scene-drama analysis before generation is described in full ("what the
+  event is, what the character wants, where the turn happens") **without
+  crediting `tig-scene-engine` in the tools list**. The method outlived
+  the attribution, which supports treating Script Stress Test and
+  Director's Read as workflow steps rather than as skill invocations the
+  user ever sees (§3.2).
+- Assets are organised in folders per sequence — the "work runs in scene
+  blocks" practice from HELL GRIND and CULLY HILL BOYS.
