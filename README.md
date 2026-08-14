@@ -29,7 +29,8 @@ specyfikacją (§35) musi obsługiwać kod, a nie model językowy.
 - utworzenie projektu (`Film.pre/` z `project.db` i katalogami produkcyjnymi),
 - blokada projektu i bezpieczne zamknięcie bazy (istotne w iCloud/Dropbox — D-010),
 - import scenariusza z zachowaniem oryginalnego pliku bez zmian,
-- adaptery formatów: Fountain i TXT (kolejne: PDF, FDX, DOCX),
+- adaptery formatów: Fountain, Final Draft (.fdx), Celtx, Word (.docx),
+  PDF i TXT,
 - parsowanie scen — nagłówki polskie (WN./PL./ZEW.) i angielskie (INT./EXT.),
   pory dnia, sublokacje, numery scen, kolejność scenariuszowa,
 - rozdzielenie dialogu od didaskaliów, rozpoznanie `(O.S.)`, `(V.O.)`,
@@ -57,9 +58,33 @@ specyfikacją (§35) musi obsługiwać kod, a nie model językowy.
 To jest praca dla modelu, nie dla kodu — z walidacją i zapisem przez warstwę
 deterministyczną, zgodnie z §35–36 specyfikacji.
 
+## Obsługiwane formaty scenariusza
+
+| Format | Skąd czytana jest struktura |
+|---|---|
+| `.fountain`, `.spmd` | konwencja zapisu Fountain |
+| `.fdx` (Final Draft) | typy akapitów zapisane w pliku |
+| `.celtx` | klasy akapitów w dokumencie HTML wewnątrz kontenera |
+| `.docx` (Word) | style akapitów, a gdy ich brak — konwencja zapisu |
+| `.pdf` | warstwa tekstowa + wcięcia (wymaga `pypdf`) |
+| `.txt` | konwencja zapisu |
+
+Formaty strukturalne (FDX, Celtx, Word ze stylami) nie zgadują, co jest
+nagłówkiem, a co postacią — czytają to wprost z pliku.
+
+Przy PDF-ach usuwane są numery stron oraz znaczniki `CONTINUED` i `(MORE)`,
+a puste linie rozdzielające bloki są odtwarzane na podstawie wcięć — bez
+tego kwestia dialogowa wchłonęłaby didaskalia, które po niej następują.
+PDF bez warstwy tekstowej (skan) jest odrzucany z informacją, że potrzebny
+jest OCR.
+
 ## Uruchomienie
 
-Wymagany Python 3.11+.
+Wymagany Python 3.11+. Do importu PDF dodatkowo:
+
+```bash
+pip install pypdf
+```
 
 ```bash
 python3 -m pre.cli nowy ~/Filmy/Moj_film --nazwa "Mój film"

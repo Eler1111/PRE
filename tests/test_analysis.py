@@ -46,8 +46,8 @@ def test_reads_the_title_from_the_title_page(analysed):
 
 
 def test_rejects_unsupported_formats(project, tmp_path):
-    unsupported = tmp_path / "screenplay.fdx"
-    unsupported.write_text("<FinalDraft/>", encoding="utf-8")
+    unsupported = tmp_path / "screenplay.rtf"
+    unsupported.write_text(r"{\rtf1 WN. MAGAZYN - DZIEN}", encoding="utf-8")
     with pytest.raises(ValueError, match="Nieobsługiwany format"):
         import_screenplay(project, unsupported)
 

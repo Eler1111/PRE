@@ -20,8 +20,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from ..ids import new_id, sequential_id
-from ..importers import importer_for
-from ..importers.fountain import extract_title
+from ..importers import extract_title, importer_for
 from ..project import Project
 from .screenplay import ParsedScene, normalize_name, parse_screenplay
 
@@ -65,7 +64,7 @@ def import_screenplay(project: Project, source_path: Path) -> ImportResult:
 
     connection = project.connection
     script_id = new_id("script")
-    title = extract_title(normalized_text) if importer.format_name == "FOUNTAIN" else None
+    title = extract_title(importer.format_name, raw_text, normalized_text)
 
     connection.execute(
         "INSERT INTO script (id, project_id, title, source_file, source_format, "

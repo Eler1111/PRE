@@ -4,6 +4,11 @@ version = "0.1.0"
 description = "PRE — Production Reference Environment"
 requires-python = ">=3.11"
 
+# The core runs on the standard library alone. PDF import is the one
+# exception, so it stays optional and is imported lazily.
+[project.optional-dependencies]
+pdf = ["pypdf>=4"]
+
 [project.scripts]
 pre = "pre.cli:main"
 

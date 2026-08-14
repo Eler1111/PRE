@@ -178,11 +178,12 @@ def is_heading(line: str) -> bool:
 
 def parse_heading(line: str) -> Heading:
     """Break a scene heading into its parts, preserving the original text."""
-    raw = line.strip()
-    body = raw
+    body = line.strip()
 
+    # A leading "." is Fountain's forcing syntax, not part of the heading.
     if body.startswith(".") and not body.startswith(".."):
         body = body[1:].strip()
+    raw = body
 
     scene_number = None
     prefix_match = _SCENE_NUMBER_PREFIX.match(body)
