@@ -80,6 +80,11 @@ change — the existing rule: this vocabulary must live only inside generated
 ## 3. New findings from the skill files themselves
 
 ### 3.0 Two generations of tooling — not two layers of one system
+**RESOLVED — see `DECISIONS.md` D-001 (generation 2 / Oneiric adopted as
+canonical) and D-002 (LIRA and the ACTING master-profile/voice layer
+retained, because generation 2 has no successor for either).** Kept below
+for the reasoning.
+
 Confirmed from the attachment lists in the briefs themselves:
 
 - **Hell Grind + Cully Hill Boys** (generation 1) shipped with exactly three
@@ -108,7 +113,7 @@ features, or the more refined/disciplined latest set from the most recent
 film — and what happens to LIRA (image prompts), which has no `TIG`
 successor and presumably still applies to both generations.
 
-### 3.1 (superseded by 3.0) ACTING vs. TIG Acting Task
+### 3.1 (superseded by 3.0; RESOLVED by D-001/D-002) ACTING vs. TIG Acting Task
 `docs/skills/acting/SKILL.md` defines its own five pillars (Objective /
 Obstacle & stakes / Tactics / Beats / Subtext) and a "master profile" format
 (one 150–220 word paragraph, written once, then rewritten per scene — see
@@ -141,6 +146,7 @@ matches the Oneiric brief's own description of "the director's read" in
 Needs confirmation before writing a spec for these two workflow phases.
 
 ### 3.3 No single canonical CINEDANCE prompt skeleton — again a generation gap
+**RESOLVED by D-001: CINEDANCE v4's 11-block skeleton is canonical.**
 Per §3.0, this is the same version split, not three independent variants:
 - Hell Grind / Cully Hill Boys used the **generation-1** `.md` CINEDANCE:
   15 sections, including CHARACTER ACTING, STYLE (a fixed per-project Style
@@ -216,19 +222,25 @@ machine).
 
 ## 4. Priority for resolution
 
-Blocking for Module 01 schema specifically: **1.1, 1.2, 1.3, 1.4, 1.5**.
+**Resolved:** §3.0, §3.1, §3.3 → `DECISIONS.md` D-001, D-002. §3.7's
+human-in-the-loop requirement is now specified as a HARD GATE in
+`DECISION_GATES.md`; what remains of §3.7 is the `Diagram` state machine in
+the schema. §3.5's approval requirement is likewise gated, but the script
+revision/proposal object it needs is still unspeced.
 
-**Single highest-leverage open question: §3.0 — which skill generation does
-PRE adopt as canonical** (generation 1: ACTING + LIRA + 15-block CINEDANCE,
-proven on two complete features; or generation 2: TIG Scene Engine + TIG
-Acting Task + TIG Diagram + CINEDANCE v4, the most recent and more
-disciplined set; or both, with an explicit rule for when each applies).
-Resolving it also resolves §3.1 and §3.3, which are downstream restatements
-of the same fork. LIRA has no generation-2 successor and likely applies
-either way.
+**Still blocking for the Module 01 schema: §1.1, §1.2, §1.3, §1.4, §1.5.**
+These are the next thing to settle — none of them can be deferred past the
+first migration.
 
-Blocking for the Orchestrator / skill-invocation layer (not Module 01, but
-next after it): **2.1, 3.0, 3.2, 3.4, 3.7**.
+Still open for the Orchestrator / skill-invocation layer: **§2.1** (how
+skills are loaded and dispatched at runtime), **§3.2** (confirm the
+Director's Read → `tig-acting-task` §0–1c mapping), **§3.4** (lock the
+asset tag scheme), **§3.7** (`Diagram` state machine).
 
-New data-model concepts surfaced, not yet speced anywhere: **3.5 (script
-revision/proposal), 3.6 (story goal / logline field)**.
+New data-model concepts surfaced, still unspeced: **§3.5** (script
+revision/proposal object), **§3.6** (story goal / logline field on
+`Project`).
+
+Not yet chosen at all: the technology stack — language, framework, how the
+chat surface is delivered, and how Claude skills are invoked from the
+backend.
