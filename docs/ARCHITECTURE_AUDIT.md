@@ -14,7 +14,11 @@ designed.
 
 ## 1. Contradictions in the base spec (CLAUDE.md / PRE_PROJECT_CONTEXT.md / Module 01)
 
-### 1.1 Entity model: unified table vs. per-type tables
+> **All five items in this section are RESOLVED** — see `DECISIONS.md`
+> D-005 (§1.1), D-006 (§1.2), D-007 (§1.3), D-008 (§1.4), D-009 (§1.5).
+> The findings are kept below as the reasoning behind those decisions.
+
+### 1.1 Entity model: unified table vs. per-type tables → D-005
 `01_global_script_analyzer.md` §8 mandates one `Entity` table with an
 `entity_type` discriminator ("Do not create separate incompatible state
 mechanisms per entity type"). `PRE_PROJECT_CONTEXT.md` §12 lists `Entity`
@@ -22,25 +26,25 @@ mechanisms per entity type"). `PRE_PROJECT_CONTEXT.md` §12 lists `Entity`
 they were distinct tables. Needs a decision: single table + discriminator,
 or `Entity` + per-type extension tables.
 
-### 1.2 `EntityAlias` missing from the master data model
+### 1.2 `EntityAlias` missing from the master data model → D-006
 `01_global_script_analyzer.md` §39 requires persisting `EntityAliases`, but
 `PRE_PROJECT_CONTEXT.md` §12 does not list it. The master list needs the
 addition.
 
-### 1.3 `ContinuityDependency` has no provenance fields
+### 1.3 `ContinuityDependency` has no provenance fields → D-007
 `PRE_PROJECT_CONTEXT.md` §13 says the FACT/INFERENCE distinction is
 "especially important for continuity and state propagation," yet
 `ContinuityDependency` (§21) has only a bare `status` field — no
 `information_status`, no `confidence`.
 
-### 1.4 `State.valid_from/valid_to` as scene ranges vs. non-linear chronology
+### 1.4 `State.valid_from/valid_to` as scene ranges vs. non-linear chronology → D-008
 The worked example in §20 shows state validity as contiguous scene ranges
 ("Scenes 1–8"), but §7 and `PRE_PROJECT_CONTEXT.md` §15 both say state
 propagation must not rely on script order, because of flashbacks/parallel
 action. Needs an explicit representation (story_order? explicit scene-id
 sets?) instead of a naive numeric range.
 
-### 1.5 Overloaded/duplicated status fields
+### 1.5 Overloaded/duplicated status fields → D-009
 `State` carries `information_status`, `confidence`, **and**
 `approval_status` — the relationship between the global `information_status`
 enum (FACT/INFERENCE/APPROVED/REJECTED/OVERRIDDEN/UNKNOWN) and the separate
@@ -228,9 +232,12 @@ human-in-the-loop requirement is now specified as a HARD GATE in
 the schema. §3.5's approval requirement is likewise gated, but the script
 revision/proposal object it needs is still unspeced.
 
-**Still blocking for the Module 01 schema: §1.1, §1.2, §1.3, §1.4, §1.5.**
-These are the next thing to settle — none of them can be deferred past the
-first migration.
+**§1.1–§1.5 are resolved** → D-005 through D-009. The Module 01 schema is
+no longer blocked.
+
+**Stack is resolved** → D-010 (Python, SQLite, local browser UI,
+configurable project location including synced cloud folders, true cloud
+hosting deferred but kept reachable).
 
 Still open for the Orchestrator / skill-invocation layer: **§2.1** (how
 skills are loaded and dispatched at runtime), **§3.2** (confirm the
@@ -241,6 +248,6 @@ New data-model concepts surfaced, still unspeced: **§3.5** (script
 revision/proposal object), **§3.6** (story goal / logline field on
 `Project`).
 
-Not yet chosen at all: the technology stack — language, framework, how the
-chat surface is delivered, and how Claude skills are invoked from the
-backend.
+None of the remaining items blocks Module 01: §2.1 and §3.7 belong to the
+Orchestrator layer, §3.4 to asset production, §3.5/§3.6 to scene
+production. §3.2 is a confirmation, not a schema question.
